@@ -6,7 +6,7 @@ export async function getAll() {
     return data
 }
 
-export function formatDateTime(isoString) {
+export function formatDateTime(isoString: string) {
     const date = new Date(isoString);
   
     const day = date.getUTCDate().toString().padStart(2, '0'); // วันที่
