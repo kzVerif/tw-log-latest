@@ -1,5 +1,5 @@
 "use client";
-import { getAll } from "@/utils/actions";
+// import { getAll } from "@/utils/actions";
 import { useState, useEffect } from "react";
 
 interface Transaction {
@@ -22,7 +22,7 @@ export default function Home() {
     setLoading(true);
     setError(null);
     try {
-      const response = await getAll();
+      const response = await fetch('/api');
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
