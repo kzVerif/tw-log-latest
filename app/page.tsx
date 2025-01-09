@@ -1,7 +1,6 @@
 "use client";
-import { getAll } from "@/utils/actions";
+import { formatDate } from "@/utils/actions";
 import { useState, useEffect } from "react";
-import { formatDateTime } from "@/utils/actions";
 
 interface Transaction {
   amount: number;
@@ -93,7 +92,7 @@ export default function Home() {
           </div>
           <div className="mb-2">
             <span className="font-bold text-lg mr-2">Received Time:</span>
-            <span className="text-lg text-gray-700">{formatDateTime(item.received_time)}</span>
+            <span className="text-lg text-gray-700">{formatDate(item.received_time)}</span>
           </div>
           <div className="mb-2">
             <span className="font-bold text-lg mr-2">Amount:</span>

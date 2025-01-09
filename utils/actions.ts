@@ -6,30 +6,37 @@ export async function getAll() {
     return data
 }
 
-export function formatDateTime(isoString: string) {
+export function formatDate(isoDateString: string): string {
     try {
-        const date = new Date(isoString);
-
-        const day = date.getUTCDate().toString().padStart(2, '0');
-        const monthNames = ["มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
-            "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
-        ];
-        const month = monthNames[date.getUTCMonth()];
-        const year = (date.getUTCFullYear() + 543).toString();
-        let hours = date.getUTCHours().toString().padStart(2, '0');
-        let minutes = date.getUTCMinutes().toString().padStart(2, '0');
-
-        // ปรับเวลาให้เป็น 00:00 ถ้าเป็นวันใหม่
-        if (hours == "24") {
-            hours = "00";
-        }
-        if (minutes == "60") {
-            minutes = "00";
-        }
-
-        return `${day}-${month}-${year} ${hours}:${minutes}`;
+      const date = new Date(isoDateString);
+  
+      if (isNaN(date.getTime())) {
+        throw new Error("Invalid date string");
+      }
+  
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = getThaiMonthName(date.getMonth());
+      const year = date.getFullYear();
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+  
+      return `${day}-${month}-${year} ${hours}:${minutes}`;
     } catch (error) {
-        console.error("Error formatting date:", error);
-        return "Invalid Date"; // หรือจัดการ error ตามความเหมาะสม
+      console.error("Error formatting date:", error);
+      return "Invalid Date"; // or handle the error as needed
     }
-}
+  }
+  
+  function getThaiMonthName(monthIndex: number): string {
+    const thaiMonths = [
+      "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
+      "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
+      "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
+    ];
+  
+    if (monthIndex >= 0 && monthIndex < 12) {
+      return thaiMonths[monthIndex];
+    } else {
+      return "Invalid Month"; // Or handle the error as needed
+    }
+  }
