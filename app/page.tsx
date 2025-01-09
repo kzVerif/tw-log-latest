@@ -81,7 +81,7 @@ export default function Home() {
       <p className="font-semibold text-3xl mb-2">LOG TRUE-WALLET</p>
       {data.trans.map((item, index) => (
         <div
-          className="bg-white rounded-lg border shadow-md mb-4 p-6 transition duration-300 hover:scale-105"
+          className="bg-white rounded-lg border shadow-md mb-4 p-6 transition duration-300 hover:scale-105 cursor-pointer"
           key={index}
         >
           <div className="flex items-center mb-2">
