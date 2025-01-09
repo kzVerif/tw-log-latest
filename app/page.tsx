@@ -1,5 +1,5 @@
 "use client";
-// import { getAll } from "@/utils/actions";
+import { getAll } from "@/utils/actions";
 import { useState, useEffect } from "react";
 
 interface Transaction {
@@ -42,7 +42,7 @@ export default function Home() {
     let previousData: WebhookData | null = null;
     const interval = setInterval(async () => {
       try {
-        const response = await fetch("http://localhost:3000/api");
+        const response = await fetch("/api");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
