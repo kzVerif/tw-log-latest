@@ -1,9 +1,9 @@
 import Link from "next/link";
 import React from "react";
 
-export default function Navigation() {
+export default function Navbar() {
     return (
-        <nav className="bg-gray-100 py-4 shadow-md sticky top-0 z-10"> {/* ปรับปรุงพื้นหลัง, เพิ่มเงา, sticky navbar */}
+        <nav className="bg-gray-100 py-4 shadow-md sticky top-0 z-10 "> {/* ปรับปรุงพื้นหลัง, เพิ่มเงา, sticky navbar */}
             <div className="container mx-auto px-4 flex justify-center"> {/* ใช้ container เพื่อจัดกึ่งกลางและ padding */}
                 <div className="flex space-x-4"> {/* เพิ่ม spacing ระหว่างปุ่ม */}
                     <Link href="/">
