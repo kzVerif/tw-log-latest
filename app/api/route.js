@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import { revalidatePath } from "next/cache";
 
 let trans = []
 
@@ -32,7 +33,8 @@ export async function POST(req) {
        received_time: decode.received_time,
        amount: decode.amount,
        sender_mobile: decode.sender_mobile
-    })    
+    })
+    revalidatePath('/')
     return NextResponse.json({
         decode
     })
