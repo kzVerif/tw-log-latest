@@ -24,7 +24,7 @@ export async function getToken(inputValue: string): Promise<string | null> { // 
     }
 }
 
-export async function formatDate(isoDateString: string): Promise<string> { // ระบุ return type เป็น Promise<string>
+export async function formatDate(isoDateString: string): Promise<string> {
     try {
         const date = new Date(isoDateString);
 
@@ -32,29 +32,19 @@ export async function formatDate(isoDateString: string): Promise<string> { // �
             throw new Error("Invalid date string");
         }
 
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = getThaiMonthName(date.getMonth());
-        const year = date.getFullYear();
-        const hours = date.getHours().toString().padStart(2, '0');
-        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const options: Intl.DateTimeFormatOptions = {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+            timeZone: 'Asia/Bangkok',
+        } as Intl.DateTimeFormatOptions & { minimumIntegerDigits: number }; // Type Assertion
 
-        return `${day}-${month}-${year} ${hours}:${minutes}`;
+        return new Intl.DateTimeFormat('th-TH', options).format(date);
     } catch (error) {
         console.error("Error formatting date:", error);
         return "Invalid Date";
-    }
-}
-
-async function getThaiMonthName(monthIndex: number): Promise<string> { // ระบุ return type เป็น Promise<string>
-    const thaiMonths = [
-        "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
-        "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
-        "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
-    ];
-
-    if (monthIndex >= 0 && monthIndex < 12) {
-        return thaiMonths[monthIndex];
-    } else {
-        return "Invalid Month";
     }
 }
