@@ -1,6 +1,6 @@
 export async function getAll() {
     try {
-        const res = await fetch('/api', {
+        const res = await fetch('https://www.mdgp-backend.store//api', {
             method: 'GET',
             cache: 'no-store' // ป้องกันการ cache ข้อมูล
         });
