@@ -21,6 +21,11 @@ export default function Navbar() {
                             2FA OTP
                         </button>
                     </Link>
+                    <Link href="/topup">
+                        <button className="bg-red-500 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 shadow">
+                            Topup
+                        </button>
+                    </Link>
                     {/* เพิ่มปุ่มอื่นๆ ได้ที่นี่ */}
                 </div>
             </div>
