@@ -1,16 +1,22 @@
-"use server"
-
 export async function getAll() {
-    const res = await fetch('https://www.mdgp-backend.store/api', {
-        method: 'GET'
-    })
-    const data = await res.json()
-    return data
+    try {
+        const res = await fetch('/api', {
+            method: 'GET',
+            cache: 'no-store' // ป้องกันการ cache ข้อมูล
+        });
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return await res.json();
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        return null; // หรือ throw error ถ้าต้องการให้จัดการ error ใน component ที่เรียกใช้
+    }
 }
 
-export async function getToken(inputValue: string): Promise<string | null> { // ระบุ return type เป็น Promise<string | null>
+export async function getToken(inputValue: string): Promise<string | null> {
     try {
-        const url = `https://2fa.live/tok/${inputValue}`
+        const url = `https://2fa.live/tok/${inputValue}`;
         const response = await fetch(url);
         if (!response.ok) {
             const errorData = await response.json();
@@ -18,13 +24,13 @@ export async function getToken(inputValue: string): Promise<string | null> { // 
         }
         const data = await response.json();
         return data.token;
-    } catch (error: any) {
+    } catch (error) {
         console.error("Error fetching 2FA:", error);
-        return null; // Return null ในกรณี error
+        return null;
     }
 }
 
-export async function formatDate(isoDateString: string): Promise<string> { // ระบุ return type เป็น Promise<string>
+export async function formatDate(isoDateString: string): Promise<string> {
     try {
         const date = new Date(isoDateString);
 
@@ -32,29 +38,19 @@ export async function formatDate(isoDateString: string): Promise<string> { // �
             throw new Error("Invalid date string");
         }
 
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = getThaiMonthName(date.getMonth());
-        const year = date.getFullYear();
-        const hours = date.getHours().toString().padStart(2, '0');
-        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const options: Intl.DateTimeFormatOptions = {
+            day: '2-digit',
+            month: 'long', // ชื่อเดือนเต็ม
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false, // ใช้รูปแบบ 24 ชั่วโมง
+            timeZone: 'Asia/Bangkok' // ระบุ Timezone
+        };
 
-        return `${day}-${month}-${year} ${hours}:${minutes}`;
+        return new Intl.DateTimeFormat('th-TH', options).format(date);
     } catch (error) {
         console.error("Error formatting date:", error);
         return "Invalid Date";
-    }
-}
-
-async function getThaiMonthName(monthIndex: number): Promise<string> { // ระบุ return type เป็น Promise<string>
-    const thaiMonths = [
-        "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน",
-        "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม",
-        "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม"
-    ];
-
-    if (monthIndex >= 0 && monthIndex < 12) {
-        return thaiMonths[monthIndex];
-    } else {
-        return "Invalid Month";
     }
 }
