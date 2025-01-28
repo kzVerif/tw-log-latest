@@ -49,6 +49,11 @@ export async function POST(req) {
                     inline: true
                 },
                 {
+                    name: "__เบอร์ผู้โอน__",
+                    value: `**${decode.sender_mobile || 'ไม่ระบุ'}**`,
+                    inline: false
+                },
+                {
                     name: "⏱ เวลาที่ได้รับ",
                     value: `<t:${Math.floor(new Date(decode.received_time).getTime() / 1000)}:F>`,
                 }
