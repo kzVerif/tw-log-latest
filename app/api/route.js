@@ -30,6 +30,10 @@ export async function POST(req) {
 
   revalidatePath("/");
 
+  let fee = ((decode.amount / 100)*0.029)
+  if (fee >= 10) {
+    fee = 10
+  }
   const send = {
     username: "MDGP-BOT",
     embeds: [
@@ -44,10 +48,20 @@ export async function POST(req) {
                     inline: true
                 },
                 {
-                    name: "__จำนวนเงิน__",
-                    value: `**฿${(decode.amount / 100).toLocaleString()}**`,
-                    inline: true
+                    name: "__จำนวนเงิน(ยังไม่หักค่าธรรมเนียม)__",
+                    value: `**฿${((decode.amount / 100)).toLocaleString()}**`,
+                    inline: false
                 },
+                {
+                  name: "__จำนวนเงิน(หักค่าธรรมเนียม)__",
+                  value: `**฿${((decode.amount/100)-fee).toLocaleString()}**`,
+                  inline: false
+              },
+                {
+                  name: "__ค่าธรรมเนียม__",
+                  value: `**฿${(fee).toLocaleString()}**`,
+                  inline: false
+              },
                 {
                     name: "__เบอร์ผู้โอน__",
                     value: `**${decode.sender_mobile || 'ไม่ระบุ'}**`,
