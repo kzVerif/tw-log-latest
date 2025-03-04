@@ -1,8 +1,5 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import { revalidatePath } from "next/cache";
-
-let trans = [];
 
 export async function GET() {
   return NextResponse.json({ Messaage: "Bello" });
@@ -18,16 +15,18 @@ export async function POST(req) {
   }
 
   let fee = ((decode.amount / 100)*0.029)
-    
+
   if (fee >= 10) {
     fee = 10
   }
 
+  const img = 'https://scontent.fphs2-1.fna.fbcdn.net/v/t39.30808-6/462616249_541697328509856_2799699175154810675_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEmTATsblWBNpWoLTUXdxw_oqbuxHEGluKipu7EcQaW4rKlFq-4isjyWUarFaCaJuN4fDE54m4Yas-2kxlbGhzK&_nc_ohc=ybadTNq_hYUQ7kNvgF39iZK&_nc_oc=AdhrKjysUJCOPLmdDJxdv79xgDTvo8TNUs7_KOIYmQTW00Kwq5jz5woo0iVPqfIoHgVZ9Iqu0qs6gNccmYFAeqEB&_nc_zt=23&_nc_ht=scontent.fphs2-1.fna&_nc_gid=AaiNYYwK12n6H1-gHwt9fAR&oh=00_AYCT9sTJs3CscFnqBuGYNYAWjsat6j6AMthCwWmJybEFtA&oe=67CCC9DF'
+  const url = 'https://discord.com/api/webhooks/1346462711340466216/pJsD8IPX3uZUlBnIu3F49HHoPhTgzIEJ8oSh5FHU_EDri1ryZQISpX5lXKLwhJdwrLV3'
   const send = {
     username: "Snapz-BOT",
     embeds: [
         {
-            avatar_url: "https://cdn.discordapp.com/attachments/1183055670677864559/1333707287646441593/16c9118e7f0d4766.jpg?ex=6799df34&is=67988db4&hm=ae6f0a998bca06dcef3eb84d300ff2cb773469fa478a81f015d0a61d85464660&",
+            avatar_url: img,
             title: "📢 **แจ้งเตือนการรับเงิน True Wallet**",
             color: 0x00ff00,  // สีเขียว
             fields: [
@@ -60,7 +59,7 @@ export async function POST(req) {
   };
 
   await fetch(
-    "https://discord.com/api/webhooks/1333696110283198464/VUMcfFmBfDZJCWg_jJOllZ6kJs5d-qulTqzSqOKOtEAddnPvONxj3-GP5MlJHNhEC8M_",
+    url,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
