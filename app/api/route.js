@@ -38,7 +38,6 @@ export async function POST(req) {
     username: "MDGP-BOT",
     embeds: [
       {
-          avatar_url: img,
           title: "📢 **แจ้งเตือนการรับเงิน True Wallet**",
           color: 0x00ff00,  // สีเขียว
           fields: [
