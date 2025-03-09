@@ -37,47 +37,37 @@ export async function POST(req) {
   const send = {
     username: "MDGP-BOT",
     embeds: [
-        {
-            avatar_url: "https://cdn.discordapp.com/attachments/1183055670677864559/1333707287646441593/16c9118e7f0d4766.jpg?ex=6799df34&is=67988db4&hm=ae6f0a998bca06dcef3eb84d300ff2cb773469fa478a81f015d0a61d85464660&",
-            title: "📢 **แจ้งเตือนการรับเงิน True Wallet**",
-            color: 0x00ff00,  // สีเขียว
-            fields: [
-                {
-                    name: "__ช่องทางการรับ__",
-                    value: `*${decode.event_type}*`,
-                    inline: true
-                },
-                {
-                    name: "__จำนวนเงิน(ยังไม่หักค่าธรรมเนียม)__",
-                    value: `**฿${((decode.amount / 100)).toLocaleString()}**`,
-                    inline: false
-                },
-                {
-                  name: "__จำนวนเงิน(หักค่าธรรมเนียม)__",
-                  value: `**฿${((decode.amount/100)-fee).toLocaleString()}**`,
+      {
+          avatar_url: img,
+          title: "📢 **แจ้งเตือนการรับเงิน True Wallet**",
+          color: 0x00ff00,  // สีเขียว
+          fields: [
+              {
+                  name: "__ช่องทางการรับ__",
+                  value: `*${decode.event_type}*`,
+                  inline: true
+              },
+              {
+                  name: "__จำนวนเงิน__",
+                  value: `**฿${((decode.amount / 100)).toLocaleString()}**`,
                   inline: false
               },
-                {
-                  name: "__ค่าธรรมเนียม__",
-                  value: `**฿${(fee).toLocaleString()}**`,
+              {
+                  name: "__เบอร์ผู้โอน__",
+                  value: `**${decode.sender_mobile || 'ไม่ระบุ'}**`,
                   inline: false
               },
-                {
-                    name: "__เบอร์ผู้โอน__",
-                    value: `**${decode.sender_mobile || 'ไม่ระบุ'}**`,
-                    inline: false
-                },
-                {
-                    name: "⏱ เวลาที่ได้รับ",
-                    value: `<t:${Math.floor(new Date(decode.received_time).getTime() / 1000)}:F>`,
-                }
-            ],
-            footer: {
-                text: "Powered by KzVrf.",
-                icon_url: "https://i.imgur.com/fKL31aD.jpg"
-            }
-        }
-    ]
+              {
+                  name: "⏱ เวลาที่ได้รับ",
+                  value: `<t:${Math.floor(new Date(decode.received_time).getTime() / 1000)}:F>`,
+              }
+          ],
+          footer: {
+              text: "Powered by KzVrf.",
+              icon_url: "https://i.imgur.com/fKL31aD.jpg"
+          }
+      }
+  ]
   };
 
   await fetch(
